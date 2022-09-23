@@ -24,6 +24,7 @@ stage('2Test&Build'){
     input message: 'Application ready for deployment, Please review and approve'
   }
     stage('7deploy2Prod'){
+    sh "sleep 50"
   deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://44.201.139.178:8080/')], contextPath: null, war: 'target/*war'
   }
   stage('8emailNotification'){
