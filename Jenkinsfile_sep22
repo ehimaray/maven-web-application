@@ -1,0 +1,40 @@
+node{
+   def mavenHome = tool name: 'maven3.8.6'
+   stage('1clonecode'){
+   git "https://github.com/ehimaray/maven-web-application"
+   }
+stage('2Test&Build'){
+    sh "${mavenHome}/bin/mvn clean package"
+    //bat "${mavenHome}/bin/mvn clean package"
+  }
+  /*
+  stage('3codeQuality'){
+    sh "${mavenHome}/bin/mvn clean sonar:sonar"
+  }
+  stage('4uploadArtifacts'){
+    sh "${mavenHome}/bin/mvn deploy"
+  }
+  stage('5deploy2UAT'){
+    sh "echo 'deploy to UAT'  "
+  deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://44.201.139.178:8080/')], contextPath: null, war: 'target/*war'
+   // deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url:'http://44.201.139.178:8080/')], contextPath: null, war: 'target/*war'
+  }
+  stage('6approvalGate'){
+    sh "echo 'ready for review' "
+    timeout(time:5, unit:'DAYS') {
+    input message: 'Application ready for deployment, Please review and approve'
+  }
+    stage('7deploy2Prod'){
+    sh "sleep 50"
+  deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://44.201.139.178:8080/')], contextPath: null, war: 'target/*war'
+  }
+  stage('8emailNotification'){
+  emailext body: '''Hi All,
+
+check build status.
+
+Landmark Technologies''', recipientProviders: [buildUser(), developers(), upstreamDevelopers(), brokenBuildSuspects(), brokenTestsSuspects()], subject: 'build status', to: 'tesla-app@gmail.com'
+  }
+}
+*/
+}
